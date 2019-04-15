@@ -1,0 +1,34 @@
+<html>
+
+<body>
+
+  <h1>
+    Campaign Advertisement Project
+  </h1>
+
+<video width="400" controls>
+  <source src={"/VideoFiles/HOUSE_AK01_LINDBECK_BOB_HOOYMAN.mp4"} type="video/mp4">
+</video>
+
+<p>
+  The candidate in the advertisement above is running for the U.S. House of Representatives in 2016. Fill in the relevant information into the transcript box below and use the provided data as a guide to make sure the names are spelled correctly. <br><br>
+  <b> Candidate Name: </b> {{ first_name }} {{last_name}} <br>
+  <b> Candidate District: </b> {{state}} {{district}} <br>
+  <b> Opponent Name: </b> {{opponent}} <br>
+</p>
+
+<form>
+  <b>Ad Transcript: </b> <br>
+  <textarea rows="8" cols="100" name = "ad_transcript">
+</textarea><br>
+
+<b>Candidate Gender: </b> <br>
+<textarea rows="1" cols="50" name = "candidate_gender">
+</textarea><br><br>
+
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+
+</html>
