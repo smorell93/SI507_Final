@@ -5,7 +5,6 @@ import random
 import numpy as np
 from flask import Flask, render_template, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from moviepy.editor import *
 
 ###Initialize Database###
 app = Flask(__name__)
