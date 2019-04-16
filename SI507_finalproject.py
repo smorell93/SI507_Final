@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import random
 import numpy as np
-from flask import Flask, render_template, session, redirect, url_for, Response
+from flask import Flask, render_template, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from moviepy.editor import *
 
@@ -29,7 +29,7 @@ vidfile_name = ad_data['vidfile']
 class Advertisement(db.Model):
     __tablename__ = 'Advertisement'
     id = db.Column(db.Integer, primary_key=True)
-#    NewData = db.relationship("NewInfo", back_populates = "Advertisement")
+    NewData = db.relationship("NewInfo", back_populates = "Ad")
     FirstName = db.Column(db.String(250))
     LastName = db.Column(db.String(250))
     State = db.Column(db.String(250))
@@ -40,27 +40,19 @@ class Advertisement(db.Model):
     def __repr__(self):
         return "{} {}, a 2016 candidate for the U.S. House of Representatives, is running in {} {} against {}.".format(self.FirstName,self.LastName,self.State,self.District, self.Opponent)
 
-# class NewInfo(db.Model):
-#     __tablename__ = 'NewInfo'
-#     id = db.Column(db.Integer, primary_key = True)
-#     Ad_id = db.Column(db.Integer, db.ForeignKey('Advertisement.id'))
-#     Ad = db.relationship("Advertisement", back_populates="NewData")
-#     Gender = db.Column(db.String(250))
-#     Transcript = db.Column(db.String(25000))
+class NewInfo(db.Model):
+    __tablename__ = 'NewInfo'
+    id = db.Column(db.Integer, primary_key = True)
+    Ad_id = db.Column(db.Integer, db.ForeignKey('Advertisement.id'))
+    Ad = db.relationship("Advertisement", back_populates="NewData")
+    Gender = db.Column(db.String(250))
+    Transcript = db.Column(db.String(25000))
+
+    def __repr__(self):
+        return "{} {} is a {} candidate".format(self.Ad.FirstName, self.Ad.LastName, self.Gender)
 #
-#     def __repr__(self):
-#         return "{} {} is a {} candidate".format(self.Ad.FirstName, self.Ad.LastName, self.Gender)
-# #
-# TEST = Advertisement(FirstName = "Sara", LastName = "Morell", State = "NY", District = "12", Opponent = "Nick Paulson", VideoFile = "CAMPAIGNAD")
-# print(TEST.id)
-# db.create_all()
-# session.add(TEST)
-# session.commit()
-# TEST2 = NewInfo(Ad = TEST, Gender = "Female", Transcript = "Ad Transcript Would Go Here")
-# session.add(TEST2)
-# session.commit()
-# print(TEST2)
-# #
+
+#
 def random_ad(ad_data):
     rand_int = random.randint(1, len(ad_data))
     cand_name = str(ad_data['cand_id'][rand_int])
@@ -78,9 +70,6 @@ def random_ad(ad_data):
     ad_title = "VideoFiles/" + str(ad_data['vidfile'][rand_int]) + ".mp4"
     Candidate = Advertisement(FirstName = first_name, LastName = last_name, State = cand_state, District = cand_district, Opponent = cand_opponent, VideoFile = ad_title)
     return Candidate
-
-TEST = random_ad(ad_data)
-print(TEST.VideoFile)
 
 #Flask Routes
 @app.route('/campaign_ad/input')
