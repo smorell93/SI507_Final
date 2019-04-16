@@ -27,4 +27,13 @@ My Github includes the following files:
 
 ##Current Progress##
 
+Thus far, I have created the classes for the campaign advertisement information and the new data that will be inputed by the user. I have also created a function that pulls a random campaign advertisement.
+
+I have also created the flask route that displays the video file, the helpful information about the ad for the user, and an HTML form for the user to fill out. This was the bulk of my work so far, as I used an HTML template to make this work and I had some difficulty with getting a video file to play in Flask.
+
 ##What's Next##
+My first next step is to save the information from the form into a CSV file.
+
+Then I need to create the student information class, which will be the final table in my database diagram. I will need to update my two current classes (*Advertisement*, and *NewInfo*) to include their relationships with the student data.
+
+The final step will be to create a Flask route where the student can log their hours and the Flask route that will display the information about how many hours the students have worked and how many advertisements they have transcribed.
