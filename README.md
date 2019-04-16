@@ -48,8 +48,14 @@ The final step will be to create a Flask route where the student can log their h
 
 - '/campaign_ad/input'
   - This Flask route is already completed and shows the
+- '/campaign_ad/submit'
+  - This route is where the data from the input route will be submitted
+- '/student/hours_tracking'
+  - This route will be where the users will input how many hours they've spent transcribing ads and how many ads they've transcribed in that time.
 
 ## How to run tests
+
+- My tests are kept in the same directory as my other files. So all you need to do is run python SI507project_tests.py.
 
 ## In this Repository:
 
