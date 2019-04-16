@@ -1,4 +1,3 @@
-###Install Packages
 import os
 import pandas as pd
 import random
@@ -12,7 +11,7 @@ app.debug = True
 app.use_reloader = True
 app.config['SECRET_KEY'] = 'kaldsjflsdkf'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./ads_database.db' # TODO: decide what your new database name will be -- that has to go here
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./ads_database.db'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -68,17 +67,3 @@ def random_ad(ad_data):
     ad_title = "VideoFiles/" + str(ad_data['vidfile'][rand_int]) + ".mp4"
     Candidate = Advertisement(FirstName = first_name, LastName = last_name, State = cand_state, District = cand_district, Opponent = cand_opponent, VideoFile = ad_title)
     return Candidate
-
-#Flask Routes
-@app.route('/campaign_ad/input')
-def video_feed():
-    ad = random_ad(ad_data)
-    session.add(ad)
-    session.commit()
-    return render_template("userinput.html", first_name = ad.FirstName, last_name = ad.LastName, state = ad.State, district = ad.District, cand_opponent = ad.Opponent, video = ad.VideoFile)
-
-
-
-if __name__ == '__main__':
-    db.create_all()
-    app.run(debug=True)
