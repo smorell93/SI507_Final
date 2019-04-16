@@ -1,6 +1,6 @@
 *Note: I spilled water on my computer on Monday night. So I am using a friend's backup computer to work on this project. This means that my GitHub currently says that all of the updates are coming from "Joe Klaver." This is because that's the name of the person who owns the computer. However, all of the work on this project is my own.*
 
-#Project Title: Campaign Advertisement Transcription Project
+# Project Title: Campaign Advertisement Transcription Project
 
 Sara Morell
 
