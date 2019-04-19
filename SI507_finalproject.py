@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import random
 import numpy as np
-from flask import Flask, render_template, session, redirect, url_for
+from flask import Flask, render_template, session, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 
 ###Initialize Database###
@@ -39,18 +39,38 @@ class Advertisement(db.Model):
     def __repr__(self):
         return "{} {}, a 2016 candidate for the U.S. House of Representatives, is running in {} {} against {}.".format(self.FirstName,self.LastName,self.State,self.District, self.Opponent)
 
+class Association(db.Model):
+    __tablename__ = 'association'
+    NewInfo_id = db.Column(db.Integer, db.ForeignKey('NewInfo.id'), primary_key=True)
+    UserInfo_id = db.Column(db.Integer, db.ForeignKey('UserInfo.id'), primary_key=True)
+    extra_data = db.Column(db.String(50))
+    Info = db.relationship("NewInfo", back_populates="Users")
+    User = db.relationship("UserInfo", back_populates="Infos")
+
 class NewInfo(db.Model):
     __tablename__ = 'NewInfo'
     id = db.Column(db.Integer, primary_key = True)
     Ad_id = db.Column(db.Integer, db.ForeignKey('Advertisement.id'))
     Ad = db.relationship("Advertisement", back_populates="NewData")
+    Users = db.relationship("Association", back_populates = "Info")
     Gender = db.Column(db.String(250))
     Transcript = db.Column(db.String(25000))
 
     def __repr__(self):
         return "{} {} is a {} candidate".format(self.Ad.FirstName, self.Ad.LastName, self.Gender)
-#
-#
+
+class UserInfo(db.Model):
+    __tablename__ = 'UserInfo'
+    id = db.Column(db.Integer, primary_key = True)
+    NewInfo_id = db.Column(db.Integer, db.ForeignKey('NewInfo.id'))
+    Infos = db.relationship("Association", back_populates = "User")
+    Name = db.Column(db.String(250))
+    HoursWorked = db.Column(db.Integer)
+    AdsCoded = db.Column(db.Integer)
+
+    def __repr__(self):
+        return "{} has worked {} hours and coded {} ads.".format(self.Name, self.HoursWorked, self.AdsCoded)
+
 def random_ad(ad_data):
     rand_int = random.randint(1, len(ad_data))
     cand_name = str(ad_data['cand_id'][rand_int])
@@ -71,13 +91,34 @@ def random_ad(ad_data):
 
 #Flask Routes
 @app.route('/campaign_ad/input')
-def video_feed():
+def ad_input():
     ad = random_ad(ad_data)
     session.add(ad)
     session.commit()
-    return render_template("userinput.html", first_name = ad.FirstName, last_name = ad.LastName, state = ad.State, district = ad.District, cand_opponent = ad.Opponent, video = ad.VideoFile)
+    return render_template("userinput.html", first_name = ad.FirstName, last_name = ad.LastName, state = ad.State, district = ad.District, cand_opponent = ad.Opponent, video = ad.VideoFile, id=ad.id)
 
+#NOTE THAT THIS SECTION OF THE CODE IS NOT WORKING
+@app.route('/campaign_ad/submit/<id>', methods = ['POST', 'GET'])
+def ad_submission(id):
+    Gender = request.form['Gender']
+    Transcript = request.form['Transcript']
+    if request.method == 'POST':
+        Submission = NewInfo(Gender = Gender, Transcript = Transcript, Ad_id = id)
+        return render_template("submission.html", gender = Submission.Gender, transcript = Submission.Transcript)
 
+@app.route('/user_info/input')
+def user_info():
+    return render_template("hoursworked.html")
+
+@app.route('/user_info/submit', methods = ['POST', 'GET'])
+def user_submission():
+    Name = request.form['Name']
+    Hours = request.form['Hours']
+    Ads = request.form['Ads']
+    Money = Hours * 10
+    if request.method == 'POST':
+        UserData = UserInfo(Name = Name, HoursWorked = Hours, AdsCoded = Ads, Money = Money)
+        return render_template("userhours.html")
 
 if __name__ == '__main__':
     db.create_all()
