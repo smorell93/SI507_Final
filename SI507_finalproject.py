@@ -39,20 +39,22 @@ class Advertisement(db.Model):
     def __repr__(self):
         return "{} {}, a 2016 candidate for the U.S. House of Representatives, is running in {} {} against {}.".format(self.FirstName,self.LastName,self.State,self.District, self.Opponent)
 
-class Association(db.Model):
-    __tablename__ = 'association'
-    NewInfo_id = db.Column(db.Integer, db.ForeignKey('NewInfo.id'), primary_key=True)
-    UserInfo_id = db.Column(db.Integer, db.ForeignKey('UserInfo.id'), primary_key=True)
-    extra_data = db.Column(db.String(50))
-    Info = db.relationship("NewInfo", back_populates="Users")
-    User = db.relationship("UserInfo", back_populates="Infos")
+# class Association(db.Model):
+#     __tablename__ = 'association'
+#     id = db.Column(db.Integer, primary_key = True)
+#     NewInfo_id = db.Column(db.Integer, db.ForeignKey('NewInfo.id'))
+#     UserInfo_id = db.Column(db.Integer, db.ForeignKey('UserInfo.id'))
+#     Info = db.relationship("NewInfo", back_populates="association")
+#     User = db.relationship("UserInfo", back_populates="association")
+
+association_table = db.Table('Association', db.Model.metadata, db.Column('NewInfo_id', db.Integer, db.ForeignKey('NewInfo.id')), db.Column('UserInfo_id', db.Integer, db.ForeignKey('UserInfo.id')))
 
 class NewInfo(db.Model):
     __tablename__ = 'NewInfo'
     id = db.Column(db.Integer, primary_key = True)
     Ad_id = db.Column(db.Integer, db.ForeignKey('Advertisement.id'))
     Ad = db.relationship("Advertisement", back_populates="NewData")
-    Users = db.relationship("Association", back_populates = "Info")
+    Users = db.relationship("UserInfo", secondary = association_table,backref="Infos")
     Gender = db.Column(db.String(250))
     Transcript = db.Column(db.String(25000))
 
@@ -62,14 +64,37 @@ class NewInfo(db.Model):
 class UserInfo(db.Model):
     __tablename__ = 'UserInfo'
     id = db.Column(db.Integer, primary_key = True)
-    NewInfo_id = db.Column(db.Integer, db.ForeignKey('NewInfo.id'))
-    Infos = db.relationship("Association", back_populates = "User")
     Name = db.Column(db.String(250))
+#    Infos = db.relationship("NewInfo", secondary = "association")
     HoursWorked = db.Column(db.Integer)
     AdsCoded = db.Column(db.Integer)
+    Money = db.Column(db.Integer)
 
     def __repr__(self):
         return "{} has worked {} hours and coded {} ads.".format(self.Name, self.HoursWorked, self.AdsCoded)
+
+
+# TEST = Advertisement(FirstName = "Sara", LastName = "Morell", State = "NY", District = "12", Opponent = "Sara's Evil Twin", VideoFile = "CAMPAIGNAD")
+# db.create_all()
+# session.add(TEST)
+# session.commit()
+# TEST_A = Advertisement(FirstName = "Bara", LastName = "Borell", State = "BY", District = "B2", Opponent = "Bara's Evil Twin", VideoFile = "BCAMPAIGNAD")
+# session.add(TEST_A)
+# session.commit()
+# TESTB = NewInfo(Ad = TEST_A, Gender = "Male", Transcript = "BAd Transcript Would Go Here")
+# session.add(TESTB)
+# session.commit()
+# TEST2 = NewInfo(Ad = TEST, Gender = "Female", Transcript = "Ad Transcript Would Go Here")
+# session.add(TEST2)
+# session.commit()
+# TEST3 = UserInfo(Name = "Sara", HoursWorked = 5, AdsCoded = 60)
+# TEST3.Info = TEST2
+# TEST3.Info = TESTB
+# session.add(TEST3)
+# session.commit()
+# print(TEST)
+# print(TEST2)
+# print(TEST3)
 
 def random_ad(ad_data):
     rand_int = random.randint(1, len(ad_data))
@@ -89,6 +114,10 @@ def random_ad(ad_data):
     Candidate = Advertisement(FirstName = first_name, LastName = last_name, State = cand_state, District = cand_district, Opponent = cand_opponent, VideoFile = ad_title)
     return Candidate
 
+def calculate_money(User):
+    money = int(User.HoursWorked) * 10
+    return money
+
 #Flask Routes
 @app.route('/campaign_ad/input')
 def ad_input():
@@ -104,6 +133,8 @@ def ad_submission(id):
     Transcript = request.form['Transcript']
     if request.method == 'POST':
         Submission = NewInfo(Gender = Gender, Transcript = Transcript, Ad_id = id)
+        session.add(Submission)
+        session.commit()
         return render_template("submission.html", gender = Submission.Gender, transcript = Submission.Transcript)
 
 @app.route('/user_info/input')
@@ -115,10 +146,13 @@ def user_submission():
     Name = request.form['Name']
     Hours = request.form['Hours']
     Ads = request.form['Ads']
-    Money = Hours * 10
     if request.method == 'POST':
-        UserData = UserInfo(Name = Name, HoursWorked = Hours, AdsCoded = Ads, Money = Money)
-        return render_template("userhours.html")
+        UserData = UserInfo(Name = Name, HoursWorked = Hours, AdsCoded = Ads)
+        Money = calculate_money(UserData)
+        UserData.Money = Money
+        session.add(UserData)
+        session.commit()
+        return render_template("userhours.html", Name = UserData.Name, Hours = UserData.HoursWorked, Ads = UserData.AdsCoded, Money = UserData.Money)
 
 if __name__ == '__main__':
     db.create_all()
