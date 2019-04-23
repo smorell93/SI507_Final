@@ -1,15 +1,56 @@
 <html>
+<head>
+  <meta charset="UTF-8">
+  <title>Javascript for Campaign Ads Project</title>
 
-<body>
+<script type="text/javascript">
+function displayInformation () {
+//  var body = document.querySelector('body')
+  document.body.style.background = "#ffff99";
+  document.body.style.color = "#000066";
+  // One place to find color option codes: https://www.w3schools.com/colors/colors_picker.asp
 
+}
+</script>
+
+<style>
+div.a {
+  text-align: center;
+}
+
+input[type=submit] {
+  background-color: #000066;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: left;
+}
+
+</style>
+
+</head>
+
+<body onload = "displayInformation();">
+<div class = "a">
   <h1>
-    Submitted Data
+    Thanks, {{name}}, for your submission!
   </h1>
-
+</div>
 <p>
   <b> Candidate Gender: </b> {{gender}} <br>
-  <b> Ad Transcript: </b> {{transcript}} <br>
+  <b> Ad Transcript: </b> {{transcript}} <br><br>
+
+  Click the button below to input another ad!
 </p>
+
+<form action = "http://localhost:5000/" method = "POST">
+  <input type="submit" value="Input More Ads">
+</form> <br><br>
+<form action = "http://localhost:5000/user_info/input", method = "POST">
+  <input type = "submit" value = "Track Your Hours">
+</form>
 
 </body>
 

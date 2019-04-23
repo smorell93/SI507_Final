@@ -1,33 +1,98 @@
 <html>
+<head>
+  <meta charset="UTF-8">
+  <title>Javascript for Campaign Ads Project</title>
 
-<body>
+<script type="text/javascript">
+function displayInformation () {
+//  var body = document.querySelector('body')
+  document.body.style.background = "#ffff99";
+  document.body.style.color = "#000066";
+  // One place to find color option codes: https://www.w3schools.com/colors/colors_picker.asp
 
+}
+
+function ThanksButton (){
+  alert("Thanks for your submission!");
+}
+
+</script>
+<style>
+div.a {
+  text-align: center;
+}
+
+input[type=submit] {
+  background-color: #000066;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: left;
+}
+
+input[name = Name], select, textarea {
+  width: 15%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+input[name = Hours], select, textarea {
+  width: 15%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+input[name = Ads], select, textarea {
+  width: 15%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+input[name = Questions], select, textarea {
+  width: 50%;
+  padding: 36px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+</style>
+
+</head>
+
+<body onload = "displayInformation();">
+<div class = "a">
   <h1>
     Hours Tracking
   </h1>
+</div>
 
 <p>
   Fill out the relevant information below about the work that you've done. Please keep careful track of your hours and how many ads you've coded in that time. Also feel free to use this space to ask me any questions you might have about ads that were difficult!<br>
 </p>
 
 <form action = "http://localhost:5000/user_info/submit" method = "POST">
-  <b>Name: </b> <br>
-  <textarea rows="1" cols="50" name = "Name">
-</textarea><br>
+  <label for = "Name"><b>Name:</b></label>
+  <input type = "text" id = "Name" name = "Name"> <br><br>
 
-<b>Hours Worked: </b> <br>
-<textarea rows="1" cols="50" name = "Hours">
-</textarea><br><br>
+<label for = "Hours"><b>Hours Worked:</b></label>
+<input type = "text" id = "Hours" name = "Hours"> <br><br>
 
-<b>Ads Transcribed: </b> <br>
-<textarea rows="1" cols="50" name = "Ads">
-</textarea><br><br>
+<label for = "Ads"><b>Ads Transcribed: </b></label>
+<input type = "text" id = "Ads" name = "Ads"><br><br>
 
-<b>Questions Remaining: </b> <br>
-<textarea rows="8" cols="50" name = "Questions">
-</textarea><br><br>
+<label for = "Questions"><b>Questions Remaining: </b></label><br>
+<input type = "text" id = "Questions" name = "Questions"><br><br>
 
-  <input type="submit" value="Submit">
+  <input type="submit" value="Submit" onclick = "ThanksButton();">
 </form>
 
 </body>

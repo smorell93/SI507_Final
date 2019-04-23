@@ -18,6 +18,14 @@ div.a {
   text-align: center;
 }
 
+input[name = Name], select, textarea {
+  width: 15%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
 input[type=submit] {
   background-color: #000066;
   color: white;
@@ -28,6 +36,7 @@ input[type=submit] {
   float: left;
 }
 
+
 </style>
 
 </head>
@@ -35,20 +44,18 @@ input[type=submit] {
 <body onload = "displayInformation();">
 <div class = "a">
   <h1>
-    Hours Tracking For {{Name}}
+    Hello and Welcome to the Campaign Advertising Project!
   </h1>
 </div>
 
 <p>
-  Today You Worked {{Hours}} hours. <br>
-  You transcribed {{Ads}} advertisements. <br>
-  You made {{Money}} dollars. <br><br>
-  Thanks, {{Name}}, for your incredible work on this project!
+  Click the button on the bottom of the page to start transcribing ads.
 </p>
 
-<form action = "http://localhost:5000/" method = "POST">
-  <input type="submit" value="Input More Ads">
-</form> <br><br>
+<form action = "http://localhost:5000/campaign_ad/input" method = "POST">
+  <input type="submit" value="Input Ads">
+
+</form>
 
 </body>
 

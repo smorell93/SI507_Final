@@ -12,6 +12,10 @@ function displayInformation () {
   // One place to find color option codes: https://www.w3schools.com/colors/colors_picker.asp
 
 }
+
+function ThanksButton (){
+  alert("Thanks for your submission!");
+}
 </script>
 
 <style>
@@ -28,6 +32,14 @@ input[name = Transcript], select, textarea {
 }
 
 input[name = Gender], select, textarea {
+  width: 15%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+input[name = Name], select, textarea {
   width: 15%;
   padding: 6px;
   border: 1px solid #ccc;
@@ -62,11 +74,9 @@ video {
   </h1>
 </div>
 
-<div.a class = "video">
 <video width="400" controls>
   <source src={{ url_for('static', filename = video)}} type="video/mp4">
 </video>
-</div.a>
 
 <p>
   The candidate in the advertisement above is running for the U.S. House of Representatives in 2016. <br> Fill in the relevant information into the transcript box below and use the provided data as a guide to make sure the names are spelled correctly. <br><br>
@@ -80,11 +90,15 @@ video {
 <label for = "Ad"><b>Ad Transcript:</b></label><br>
 <input type = "text" id = "Ad" name = "Transcript">
 </div.b>
-<label for = "Gender"><b> Candidate Gender: </b></label><br>
-<input type = "text" id = "Gender" name = "Gender">
-</textarea><br><br>
+<br><br>
+<label for = "Gender"><b> Candidate Gender: </b></label>
+<input type = "text" id = "Gender" name = "Gender"><br><br>
 
-  <input type="submit" value="Submit">
+<label for = "Name"><b> Your Name: </b></label>
+<input type = "text" id = "Name" name = "Name"><br><br>
+
+  <input type="submit" value="Submit" onclick = ThanksButton()>
+
 </form>
 
 </body>
