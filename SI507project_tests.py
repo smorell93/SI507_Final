@@ -18,29 +18,18 @@ class Tests(unittest.TestCase):
         ad_data = pd.read_csv("wmphouse2016.csv")
         TEST4 = random_ad(ad_data)
         self.assertTrue(isinstance(TEST4.VideoFile,str) == True, "Testing if video file name is a string")
+        self.assertEqual(TEST4.VideoFile[-4:], ".mp4", "Testing that the video files are the correct format")
+
+    def test_MoneyFunction(self):
+        TEST5 = UserInfo(Name = "Sara", HoursWorked = 12, AdsCoded = 120)
+        money = calculate_money(TEST5)
+        TEST5.Money = money
+        self.assertTrue(TEST5.Money == 120)
+
+    def test_UserInfoRelationship(self):
+        TEST6 = UserInfo(Name = "Sara", HoursWorked = 12, AdsCoded = 120)
+        TEST7 = NewInfo(Gender = "Female", Transcript = "THIS IS A TRANSCRIPT")
+        TEST7.Users.append(TEST6)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
-
-
-# TEST = Advertisement(FirstName = "Sara", LastName = "Morell", State = "NY", District = "12", Opponent = "Sara's Evil Twin", VideoFile = "CAMPAIGNAD")
-# db.create_all()
-# session.add(TEST)
-# session.commit()
-# TEST_A = Advertisement(FirstName = "Bara", LastName = "Borell", State = "BY", District = "B2", Opponent = "Bara's Evil Twin", VideoFile = "BCAMPAIGNAD")
-# session.add(TEST_A)
-# session.commit()
-# TESTB = NewInfo(Ad = TEST_A, Gender = "Male", Transcript = "BAd Transcript Would Go Here")
-# session.add(TESTB)
-# session.commit()
-# TEST2 = NewInfo(Ad = TEST, Gender = "Female", Transcript = "Ad Transcript Would Go Here")
-# session.add(TEST2)
-# session.commit()
-# TEST3 = UserInfo(Name = "Sara", HoursWorked = 5, AdsCoded = 60)
-# TEST3.Info = TEST2
-# TEST3.Info = TESTB
-# session.add(TEST3)
-# session.commit()
-# print(TEST)
-# print(TEST2)
-# print(TEST3)

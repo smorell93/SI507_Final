@@ -38,18 +38,31 @@ class Advertisement(db.Model):
     def __repr__(self):
         return "{} {}, a 2016 candidate for the U.S. House of Representatives, is running in {} {} against {}.".format(self.FirstName,self.LastName,self.State,self.District, self.Opponent)
 
+association_table = db.Table('Association', db.Model.metadata, db.Column('NewInfo_id', db.Integer, db.ForeignKey('NewInfo.id')), db.Column('UserInfo_id', db.Integer, db.ForeignKey('UserInfo.id')))
+
 class NewInfo(db.Model):
     __tablename__ = 'NewInfo'
     id = db.Column(db.Integer, primary_key = True)
     Ad_id = db.Column(db.Integer, db.ForeignKey('Advertisement.id'))
     Ad = db.relationship("Advertisement", back_populates="NewData")
+    Users = db.relationship("UserInfo", secondary = association_table,backref="Infos")
     Gender = db.Column(db.String(250))
     Transcript = db.Column(db.String(25000))
 
     def __repr__(self):
         return "{} {} is a {} candidate".format(self.Ad.FirstName, self.Ad.LastName, self.Gender)
-#
-#
+
+class UserInfo(db.Model):
+    __tablename__ = 'UserInfo'
+    id = db.Column(db.Integer, primary_key = True)
+    Name = db.Column(db.String(250))
+    HoursWorked = db.Column(db.Integer, default = 0)
+    AdsCoded = db.Column(db.Integer, default = 0)
+    Money = db.Column(db.Integer)
+
+    def __repr__(self):
+        return "{} has worked {} hours and coded {} ads.".format(self.Name, self.HoursWorked, self.AdsCoded)
+
 def random_ad(ad_data):
     rand_int = random.randint(1, len(ad_data))
     cand_name = str(ad_data['cand_id'][rand_int])
@@ -65,5 +78,23 @@ def random_ad(ad_data):
     else:
         cand_opponent = str(ad_data['tgt_id'][rand_int])
     ad_title = "VideoFiles/" + str(ad_data['vidfile'][rand_int]) + ".mp4"
+#    Candidate = Advertisement.query.filter_by(FirstName = first_name).first()
+#    if Candidate:
+#        return Candidate
+#    else:
     Candidate = Advertisement(FirstName = first_name, LastName = last_name, State = cand_state, District = cand_district, Opponent = cand_opponent, VideoFile = ad_title)
     return Candidate
+
+def calculate_money(User):
+    money = int(User.HoursWorked) * 10
+    return money
+
+def get_user(user_name):
+    user = UserInfo.query.filter_by(Name = user_name).first()
+    if user:
+        return user
+    else:
+        user = UserInfo(Name = user_name)
+        session.add(user)
+        session.commit()
+        return user
