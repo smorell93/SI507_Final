@@ -1,4 +1,4 @@
-*Note: I spilled water on my computer on Monday night. So I am using a friend's backup computer to work on this project. This means that my GitHub currently says that all of the updates are coming from "Joe Klaver." This is because that's the name of the person who owns the computer. However, all of the work on this project is my own.*
+*Note: I spilled water on my computer, which means that part of this project was completed on a backup computer. So the GitHub has commits from both "Sara Morell" and "Joe Klaver." However, both of those represent work done entirely by me.*
 
 # Project Title: Campaign Advertisement Transcription Project
 
@@ -6,43 +6,35 @@ Sara Morell
 
 https://github.com/smorell93/SI507_Final
 
+---
+
 ## Project Description
 This project is a Flask application that shows a campaign ad and has the user fill out information about the ad.
 
 #### Project Purpose
-This summer, I will be hiring undergraduate research assistants to transcript campaign advertisements from 2016 races for the U.S. House. This data comes from the Wesleyan Media Project, but it comes in the form of video files with coded variables. I need these undergraduate coders to transcribe the ad and then note the gender of the candidate.
+This summer, I will be hiring undergraduate research assistants to transcript campaign advertisements from 2016 races for the U.S. House. This data comes from the Wesleyan Media Project, but it comes in the form of video files with coded variables, rather than written transcripts. I need these undergraduate coders to transcribe the ad and then note the gender of the candidate. I also need to be able to track how many hours they've worked and how much they are being paid.
 
 #### What The Code Does
-They will view a random campaign ad in a Flask application, which also provides them with a form to fill out for the new information. The new information includes both the transcript and the candidate gender. The Flask application will also show them helpful information, like the candidate's name, the district for the race, and the opponent's name (if the database has it).
+Each user will view a random campaign ad in a Flask application, which also provides them with a form to fill out for the new information. The new information includes both the transcript and the candidate gender. The Flask application will also show them helpful information, like the candidate's name, the district for the race, and the opponent's name (if the database has it).
 
-My code will then save their responses in a csv file, which has a one-to-one relationship with the campaign ads.
+My code will then save their responses in a csv file, which has a many-to-one relationship with the campaign ads. It is a many-to-one relationship, because many users can transcribe the same ad. This ensures that I can measure intercoder reliability.
 
-Next, there will be a separate route with a form where they can fill out information about the total number of hours they have worked in a particular session and how many advertisements they transcribed in that time. When they submit that information, it will take them to a submission page that shows their total number of hours worked.
-
-#### Current Progress
-
-Thus far, I have created the classes for the campaign advertisement information and the new data that will be inputed by the user. I have also created a function that pulls a random campaign advertisement.
-
-I have also created the flask route that displays the video file, the helpful information about the ad for the user, and an HTML form for the user to fill out. This was the bulk of my work so far, as I used an HTML template to make this work and I had some difficulty with getting a video file to play in Flask.
-
-#### What's Next
-My first next step is to save the information from the form into a CSV file.
-
-Then I need to create the student information class, which will be the final table in my database diagram. I will need to update my two current classes (*Advertisement*, and *NewInfo*) to include their relationships with the student data.
-
-The final step will be to create a Flask route where the student can log their hours and the Flask route that will display the information about how many hours the students have worked and how many advertisements they have transcribed.
+Next, there will be a separate route with a form where they can fill out information about the total number of hours they have worked in a particular session and how many advertisements they transcribed in that time. When they submit that information, it will take them to a submission page that shows their total number of hours worked. The user information has a many-to-many relationship with the ad information, because users code many ads and ads are coded by many users.
 
 ## How to Run
 
 1. First, you should install all of the requirements with pip install -r requirements.text
-2. Second, you should run python SI507_finalproject.py
+2. Second, you should check that you have a set of video files in a folder labeled "static." These videos are a random sample of the 600,000 ads in the dataset. These video files correspond to the wmphouse2016.csv file, which provides information about each ad.
+2. Next, you should run python SI507_finalproject.py
 3. You can run the tests by running SI507project_tests.py
 
 ## How to Use
 
-1. You should have a set of video files saved in a folder labeled "static." These files should ideally be mp4 files, as wmv files will not run easily on Flask.
-2. You should have a CSV file with the information you already know about the candidates, with a column that matches the candidates to the video files.
-3. You should have specific id numbers for each of the users who will be transcribing the video files as part of the project.
+1. When you run SI507_finalproject.py, it provides a link "http://127.0.0.1:5000/" to the Flask homepage. You should start by going to this link. If you have gone to the correct link, you should see a page that looks like this:
+
+![Homepage](ss1.png)
+
+2. Click the button that says ""
 
 ## Routes in this Application
 
