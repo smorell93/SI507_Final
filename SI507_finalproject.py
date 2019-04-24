@@ -79,10 +79,6 @@ def random_ad(ad_data):
     else:
         cand_opponent = str(ad_data['tgt_id'][rand_int])
     ad_title = "VideoFiles/" + str(ad_data['vidfile'][rand_int]) + ".mp4"
-#    Candidate = Advertisement.query.filter_by(FirstName = first_name).first()
-#    if Candidate:
-#        return Candidate
-#    else:
     Candidate = Advertisement(FirstName = first_name, LastName = last_name, State = cand_state, District = cand_district, Opponent = cand_opponent, VideoFile = ad_title)
     return Candidate
 
