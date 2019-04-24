@@ -38,7 +38,7 @@ Next, there will be a separate route with a form where they can fill out informa
 
 However, you are supposed to put the transcript of the ad in the "Transcript" box. You are supposed to put "Male," "Female," "Other/Non-Binary," or "Unsure" into the "Gender box." And you should put just your first name into the name box.
 
-This page should look like this: https://www.dropbox.com/s/epp5mwevns1qzpq/SS2.png?dl=0
+This page should look like this: https://www.dropbox.com/s/md1k4xh2d6zolg3/SS2.png?dl=0
 
 4. Once you finish filling out the form, click the button that says "Submit" on the bottom. If this works correctly, you should see the phrase "Thanks for your submission!" appear.
 
