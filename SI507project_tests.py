@@ -30,6 +30,7 @@ class Tests(unittest.TestCase):
         TEST6 = UserInfo(Name = "Sara", HoursWorked = 12, AdsCoded = 120)
         TEST7 = NewInfo(Gender = "Female", Transcript = "THIS IS A TRANSCRIPT")
         TEST7.Users.append(TEST6)
+        self.assertEqual(str(TEST7.Users), "["+str(TEST6)+"]", "Testing that the assoociation table is working")
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
