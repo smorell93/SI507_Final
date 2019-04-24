@@ -30,9 +30,7 @@ Next, there will be a separate route with a form where they can fill out informa
 
 ## How to Use
 
-1. When you run SI507_finalproject.py, it provides a link "http://127.0.0.1:5000/" to the Flask homepage. You should start by going to this link. If you have gone to the correct link, you should see a page that looks like this:
-
-![Homepage](ss1.png)
+1. When you run SI507_finalproject.py, it provides a link "http://127.0.0.1:5000/" to the Flask homepage. You should start by going to this link. If you have gone to the correct link, you should see a page that looks like this: https://www.dropbox.com/s/m2rci8adg55sood/SS1.png?dl=0.
 
 2. Click the button that says ""
 
